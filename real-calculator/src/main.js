@@ -3,7 +3,9 @@ const display = document.getElementById("display");
 const keys = document.querySelector(".keys");
 
 function appendToDisplay(input) {
-  display.value += input;
+  if (display.value.length < 10) {
+    display.value += input;
+  }
 }
 
 function clearDisplay() {
@@ -12,7 +14,12 @@ function clearDisplay() {
 
 function calculate() {
   try {
-    display.value = evaluate(display.value);
+    let result = evaluate(display.value);
+    if (result > 999999999) {
+      display.value = result.toExponential();
+    } else {
+      display.value = result.toPrecision(10);
+    }
   } catch (error) {
     display.value = "Error";
   }
